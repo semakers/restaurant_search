@@ -6,13 +6,12 @@ part of 'restaurant_api.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
 class _RestaurantApi implements RestaurantApi {
   _RestaurantApi(
     this._dio, {
     this.baseUrl,
-    this.errorLogger,
   }) {
     baseUrl ??= 'http://jsonmock.hackerrank.com/';
   }
@@ -21,46 +20,31 @@ class _RestaurantApi implements RestaurantApi {
 
   String? baseUrl;
 
-  final ParseErrorLogger? errorLogger;
-
   @override
-  Future<RestaurantPayload> getRestaurants({
-    int page = 1,
-    String? city,
-  }) async {
+  Future<RestaurantPayload> getRestaurants({int page = 1}) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'page': page,
-      r'city': city,
-    };
-    queryParameters.removeWhere((k, v) => v == null);
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<RestaurantPayload>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<RestaurantPayload>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '/api/food_outlets',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late RestaurantPayload _value;
-    try {
-      _value = RestaurantPayload.fromJson(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
-    return _value;
+            .compose(
+              _dio.options,
+              '/api/food_outlets',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = RestaurantPayload.fromJson(_result.data!);
+    return value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

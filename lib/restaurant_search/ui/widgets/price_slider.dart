@@ -20,19 +20,18 @@ class PriceRangeSlider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text('${currentMin?.toInt() ?? min.toInt()}\$'),
+        const Text('\$'),
         Expanded(
           child: RangeSlider(
             activeColor: Theme.of(context).primaryColor,
-            inactiveColor:
-                Theme.of(context).primaryColor.withValues(alpha: 0.3),
+            inactiveColor: Theme.of(context).primaryColor.withOpacity(0.3),
             min: min,
             max: max,
             values: RangeValues(currentMin ?? min, currentMax ?? max),
             onChanged: onChanged,
           ),
         ),
-        Text('${currentMax?.toInt() ?? max.toInt()}\$'),
+        const Text('\$\$\$\$'),
       ],
     );
   }

@@ -1,8 +1,10 @@
+import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'restaurant_payload.g.dart';
 
 @JsonSerializable()
+@CopyWith()
 class RestaurantPayload {
   final int page;
   @JsonKey(name: 'per_page')
@@ -27,6 +29,7 @@ class RestaurantPayload {
 }
 
 @JsonSerializable()
+@CopyWith()
 class Restaurant {
   final String city;
   final String name;
@@ -51,6 +54,7 @@ class Restaurant {
 }
 
 @JsonSerializable()
+@CopyWith()
 class UserRating {
   @JsonKey(name: 'average_rating')
   final double averageRating;

@@ -13,8 +13,5 @@ abstract class RestaurantApi {
 
   @GET('/api/food_outlets')
   // There are 40 total pages - first page is 1
-  Future<RestaurantPayload> getRestaurants({
-    @Query('page') int page = 1,
-    @Query('city') String? city,
-  });
+  Future<RestaurantPayload> getRestaurants({int page = 1});
 }
